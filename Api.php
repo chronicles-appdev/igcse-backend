@@ -108,6 +108,29 @@ class  Api extends Rest
             $this->throwError(FAILED_RESPONSE, $e->getMessage());
         }
     }
+
+    public function getQuestions()
+    {
+
+        $tt_id = $this->validateParameter('tt_id', $this->param['tt_id'], STRING, false);
+        $student_id = $this->validateParameter('student_id', $this->param['student_id'], STRING, false);
+
+
+        $query = new Query;
+        try {
+
+            $results = $query->get_multi('marking', array('test_taken_id' => $tt_id), 'id', 'asc');
+
+            if ($results) {
+                $data = ['questions' => $results];
+                $this->returnResponse(SUCCESS_RESPONSE, $data);
+            } else {
+                $this->returnResponse(FAILED_RESPONSE, "Error Please Try Again.");
+            }
+        } catch (Exception $e) {
+            $this->throwError(FAILED_RESPONSE, $e->getMessage());
+        }
+    }
     public function getTests()
     {
 
@@ -285,8 +308,6 @@ class  Api extends Rest
             $message = 'Failed to Create Test';
             $this->returnResponse(FAILED_RESPONSE, $message);
         }
-       
-
     }
     // public function setQuestions()
     // {
