@@ -233,4 +233,23 @@ class  Api extends Rest
         //     $this->returnResponse(SUCCESS_RESPONSE, $message);
 
     }
+    public function takeTest()
+    {
+        $test = $this->validateParameter('test', $this->param['test'], STRING, false);
+        $year = $this->validateParameter('year', $this->param['year'], STRING, false);
+        $subject = $this->validateParameter('subject', $this->param['subject'], STRING, false);
+
+
+        $query = new Query;
+        $tests = $query->create('takeTest', array('test_id' => $test, 'year_id' => $year, 'subject_id' => $subject));
+        if ($tests) {
+            $message = 'Test  Created Successfully';
+            $this->returnResponse(SUCCESS_RESPONSE, $tests);
+        } else {
+            $message = 'Failed to Create Test';
+            $this->returnResponse(FAILED_RESPONSE, $message);
+        }
+        //     $this->returnResponse(SUCCESS_RESPONSE, $message);
+
+    }
 }
