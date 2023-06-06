@@ -28,9 +28,9 @@ class  Query {
             return $multi;
 
         }
-        public function get_books($student_id, $class_id){
+        public function get_questions($year_id, $subject_id, $num_question){
 
-            $stmt = $this->pdo->prepare("SELECT * FROM upload_book  where  upload_book.class = '$class_id' ORDER BY `book_title` asc");
+            $stmt = $this->pdo->prepare("SELECT * FROM questions  where  subject_id = '$subject_id' AND year_id='$year_id' ORDER BY RAND() LIMIT $num_question");
             $stmt->execute();
             $multi = $stmt->fetchAll(PDO::FETCH_OBJ);
         

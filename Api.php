@@ -265,15 +265,55 @@ class  Api extends Rest
 
 
         $query = new Query;
-        $tests = $query->create('takeTest', array('student_id' => $student_id, 'test_id' => $test, 'year_id' => $year, 'subject_id' => $subject));
-        if ($tests) {
+        $num_question = $query->get_single('tests', array('id' => $test), 'id', 'asc')->num_question;
+
+        $tt_id = $query->create('takeTest', array('student_id' => $student_id, 'test_id' => $test, 'year_id' => $year, 'subject_id' => $subject));
+
+
+        $tests = $query->get_questions($year, $subject, $num_question);
+        $no = 0;
+
+        foreach ($tests as $test) {
+
+            $no++;
+            $save = $query->create('marking', array('question_id' => $test->id, 'test_taken_id' => $tt_id));
+        }
+        if ($no === $num_question) {
             $message = 'Test  Created Successfully';
-            $this->returnResponse(SUCCESS_RESPONSE, $tests);
+            $this->returnResponse(SUCCESS_RESPONSE, $tt_id);
         } else {
             $message = 'Failed to Create Test';
             $this->returnResponse(FAILED_RESPONSE, $message);
         }
-        //     $this->returnResponse(SUCCESS_RESPONSE, $message);
+       
 
     }
+    // public function setQuestions()
+    // {
+    //     $test = $this->validateParameter('test', $this->param['test'], STRING, false);
+    //     $year = $this->validateParameter('year', $this->param['year'], STRING, false);
+    //     $subject = $this->validateParameter('subject', $this->param['subject'], STRING, false);
+    //     $student_id = $this->validateParameter('student_id', $this->param['student_id'], STRING, false);
+
+
+    //     $query = new Query;
+    //     $num_question = $query->get_single('tests', array('id' => $test), 'id', 'asc')->num_question;
+    //     $tests = $query->get_questions($year, $subject, $num_question);
+    //     $no = 0;
+    //     $tt_id = $query->create('test_taken', array('subject_id' => $subject, 'test_id' => $test, 'year_id' => $year));
+    //     foreach ($tests as $test) {
+
+    //         $no++;
+    //         $save = $query->create('marking', array('question_id' => $test->id, 'test_taken_id' => $tt_id));
+    //     }
+    //     if ($no === $num_question) {
+
+    //         $message = 'Questions  Created Successfully';
+    //         $this->returnResponse(SUCCESS_RESPONSE, 'success');
+    //     } else {
+
+    //         $message = 'Failed to Create Questions';
+    //         $this->returnResponse(FAILED_RESPONSE, 'failed');
+    //     }
+    // }
 }
