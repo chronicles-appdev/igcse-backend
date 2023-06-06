@@ -108,19 +108,61 @@ class  Api extends Rest
             $this->throwError(FAILED_RESPONSE, $e->getMessage());
         }
     }
-    public function getBooks()
+    public function getTests()
     {
-        $class_id = $this->validateParameter('class', $this->param['class'], STRING, false);
+
         $student_id = $this->validateParameter('student_id', $this->param['student_id'], STRING, false);
 
 
         $query = new Query;
         try {
 
-            $results = $query->get_books($student_id, $class_id);
+            $results = $query->get_All('tests', 'test_name', 'asc');
 
             if ($results) {
-                $data = ['books' => $results];
+                $data = ['tests' => $results];
+                $this->returnResponse(SUCCESS_RESPONSE, $data);
+            } else {
+                $this->returnResponse(FAILED_RESPONSE, "Error Please Try Again.");
+            }
+        } catch (Exception $e) {
+            $this->throwError(FAILED_RESPONSE, $e->getMessage());
+        }
+    }
+    public function getYears()
+    {
+
+        $student_id = $this->validateParameter('student_id', $this->param['student_id'], STRING, false);
+
+
+        $query = new Query;
+        try {
+
+            $results = $query->get_All('years', 'year_name', 'desc');
+
+            if ($results) {
+                $data = ['years' => $results];
+                $this->returnResponse(SUCCESS_RESPONSE, $data);
+            } else {
+                $this->returnResponse(FAILED_RESPONSE, "Error Please Try Again.");
+            }
+        } catch (Exception $e) {
+            $this->throwError(FAILED_RESPONSE, $e->getMessage());
+        }
+    }
+    public function getSubjects()
+    {
+
+        $student_id = $this->validateParameter('student_id', $this->param['student_id'], STRING, false);
+
+
+        $query = new Query;
+        try {
+
+            $results = $query->get_All('subjects', 'subject_name', 'asc');
+
+            if ($results) {
+                $data = ['subjects' => $results];
                 $this->returnResponse(SUCCESS_RESPONSE, $data);
             } else {
                 $this->returnResponse(FAILED_RESPONSE, "Error Please Try Again.");
