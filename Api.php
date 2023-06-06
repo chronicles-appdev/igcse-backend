@@ -243,7 +243,7 @@ class  Api extends Rest
         $query = new Query;
         try {
 
-            $results = $query->get_single('testTaken', array('id' => $test_id), 'id', 'asc');
+            $results = $query->get_single('tests', array('id' => $test_id), 'id', 'asc');
 
             if ($results) {
                 $data = ['testDetail' => $results];
