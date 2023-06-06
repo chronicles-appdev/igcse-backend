@@ -233,6 +233,28 @@ class  Api extends Rest
         //     $this->returnResponse(SUCCESS_RESPONSE, $message);
 
     }
+
+    public function getTestDetails()
+    {
+
+        $test_id = $this->validateParameter('test_id', $this->param['test_id'], STRING, false);
+
+
+        $query = new Query;
+        try {
+
+            $results = $query->get_single('testTaken', array('id' => $test_id), 'id', 'asc');
+
+            if ($results) {
+                $data = ['testDetail' => $results];
+                $this->returnResponse(SUCCESS_RESPONSE, $data);
+            } else {
+                $this->returnResponse(FAILED_RESPONSE, "Error Please Try Again.");
+            }
+        } catch (Exception $e) {
+            $this->throwError(FAILED_RESPONSE, $e->getMessage());
+        }
+    }
     public function takeTest()
     {
         $test = $this->validateParameter('test', $this->param['test'], STRING, false);
