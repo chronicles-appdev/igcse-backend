@@ -180,7 +180,7 @@ class  Api extends Rest
 
 
         $query = new Query;
-        $student = $query->create('student', array('fullname' => $fullname, 'email' => $email,  'phone' => $phone));
+        $student = $query->create('student', array('fullname' => $fullname, 'email' => $email, 'class' => $class, 'phone' => $phone));
         if ($student) {
             $message = 'User Created Successfully';
             $this->returnResponse(SUCCESS_RESPONSE, $student);
