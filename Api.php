@@ -238,10 +238,11 @@ class  Api extends Rest
         $test = $this->validateParameter('test', $this->param['test'], STRING, false);
         $year = $this->validateParameter('year', $this->param['year'], STRING, false);
         $subject = $this->validateParameter('subject', $this->param['subject'], STRING, false);
+        $student_id = $this->validateParameter('student_id', $this->param['student_id'], STRING, false);
 
 
         $query = new Query;
-        $tests = $query->create('takeTest', array('test_id' => $test, 'year_id' => $year, 'subject_id' => $subject));
+        $tests = $query->create('takeTest', array('student_id' => $student_id, 'test_id' => $test, 'year_id' => $year, 'subject_id' => $subject));
         if ($tests) {
             $message = 'Test  Created Successfully';
             $this->returnResponse(SUCCESS_RESPONSE, $tests);
