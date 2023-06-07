@@ -109,6 +109,28 @@ class  Api extends Rest
         }
     }
 
+    public function getQuestion()
+    {
+
+        $marking_id = $this->validateParameter('marking_id', $this->param['marking_id'], STRING, false);
+
+
+        $query = new Query;
+        try {
+
+            $resu = $query->get_single('marking', array('id' => $marking_id), 'id', 'desc');
+            $results = $query->get_single('questions', array('id' => $resu->question_id), 'id', 'desc');
+
+            if ($results) {
+                $data = ['question' => $results];
+                $this->returnResponse(SUCCESS_RESPONSE, $data);
+            } else {
+                $this->returnResponse(FAILED_RESPONSE, "Error Please Try Again.");
+            }
+        } catch (Exception $e) {
+            $this->throwError(FAILED_RESPONSE, $e->getMessage());
+        }
+    }
     public function getQuestions()
     {
 
