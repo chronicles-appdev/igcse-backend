@@ -32,7 +32,7 @@ class  Query
     public function get_question_s($tt_id)
     {
 
-        $stmt = $this->pdo->prepare("SELECT * FROM marking  inner join questions  ON  marking.question_id = questions.id where  marking.test_taken_id = '$tt_id'");
+        $stmt = $this->pdo->prepare("SELECT * FROM marking  inner join questions  ON  marking.question_id = questions.id where  marking.test_taken_id = '18'");
         $stmt->execute();
         $multi = $stmt->fetchAll(PDO::FETCH_OBJ);
 
