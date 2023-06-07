@@ -146,7 +146,7 @@ class  Api extends Rest
 
             if ($results) {
                 $data = ['questions' => $results];
-                $this->returnResponse(SUCCESS_RESPONSE, $results);
+                $this->returnResponse(SUCCESS_RESPONSE, $data);
             } else {
                 $this->returnResponse(FAILED_RESPONSE, "Error Please Try Again.");
             }
