@@ -29,6 +29,16 @@ class  Query
 
         return $multi;
     }
+    public function get_question_s($tt_id)
+    {
+
+        $stmt = $this->pdo->prepare("SELECT * FROM marking  inner join questions  ON  marking.question_id = qestions.id where  marking.test_taken_id = '$tt_id'");
+        $stmt->execute();
+        $multi = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        return $multi;
+    }
+
     public function get_questions($year_id, $subject_id, $num_question)
     {
 

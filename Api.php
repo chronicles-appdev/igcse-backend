@@ -141,7 +141,8 @@ class  Api extends Rest
         $query = new Query;
         try {
 
-            $results = $query->get_multi('marking', array('test_taken_id' => $tt_id), 'id', 'asc');
+            //$results = $query->get_multi('marking', array('test_taken_id' => $tt_id), 'id', 'asc');
+            $results = $query->get_question_s($tt_id);
 
             if ($results) {
                 $data = ['questions' => $results];
