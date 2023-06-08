@@ -186,6 +186,30 @@ class  Api extends Rest
             $this->throwError(FAILED_RESPONSE, $e->getMessage());
         }
     }
+
+    public function getResult()
+    {
+
+        $student_id = $this->validateParameter('student_id', $this->param['student_id'], STRING, false);
+        $tt_id = $this->validateParameter('tt_id', $this->param['tt_id'], STRING, false);
+
+
+
+        $query = new Query;
+        try {
+
+            $results = $query->get_single('takeTest', array('id' => $tt_id), 'id', 'asc');
+
+            if ($results) {
+                $data = ['tests' => $results];
+                $this->returnResponse(SUCCESS_RESPONSE, $data);
+            } else {
+                $this->returnResponse(FAILED_RESPONSE, "Error Please Try Again.");
+            }
+        } catch (Exception $e) {
+            $this->throwError(FAILED_RESPONSE, $e->getMessage());
+        }
+    }
     public function getTests()
     {
 
@@ -345,7 +369,7 @@ class  Api extends Rest
         $query = new Query;
         $num_question = $query->get_single('tests', array('id' => $test), 'id', 'asc')->num_question;
 
-        $tt_id = $query->create('takeTest', array('student_id' => $student_id, 'test_id' => $test, 'year_id' => $year, 'subject_id' => $subject));
+        $tt_id = $query->create('takeTest', array('student_id' => $student_id, 'test_id' => $test, 'year_id' => $year, 'subject_id' => $subject, 'num_question' => $num_question));
 
 
         $tests = $query->get_questions($year, $subject, $num_question);
