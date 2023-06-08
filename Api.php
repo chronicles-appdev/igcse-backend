@@ -142,8 +142,16 @@ class  Api extends Rest
         $query = new Query;
         try {
 
-            //$results = $query->get_multi('marking', array('test_taken_id' => $tt_id), 'id', 'asc');
+            $quer = $query->get_single('marking', array('id' => $marking_id), 'id', 'asc');
+            $correct_opt = $quer->correct_option;
+            $tt_id = $quer->test_taken_id;
             $results = $query->update('marking', 'id', $marking_id, array('selected_option' => $answer));
+
+            if ($answer == $correct_opt) {
+                $results = $query->correct_update($tt_id);
+            } else {
+                $results = $query->wrong_update($tt_id);
+            }
 
             if ($results) {
                 $data = ['questions' => $results];
@@ -346,7 +354,7 @@ class  Api extends Rest
         foreach ($tests as $test) {
 
             $no++;
-            $save = $query->create('marking', array('question_id' => $test->id, 'test_taken_id' => $tt_id));
+            $save = $query->create('marking', array('question_id' => $test->id, 'test_taken_id' => $tt_id, 'correct_option' => $test->correct_option));
         }
         if ($no == $num_question) {
             $message = 'Test  Created Successfully';

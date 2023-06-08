@@ -285,6 +285,36 @@ class  Query
         }
     }
 
+    public function correct_update($id)
+    {
+
+
+        $sql = "UPDATE takeTest SET  correctly_answ = correctly_answ + 1 WHERE id = $id";
+        $stmt = $this->pdo->prepare($sql);
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public function wrong_update($id)
+    {
+
+
+        $sql = "UPDATE takeTest SET  correctly_answ = wrongly_answ + 1 WHERE id = $id";
+        $stmt = $this->pdo->prepare($sql);
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 
     public function delete($table, $array)
     {
