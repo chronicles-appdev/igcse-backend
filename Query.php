@@ -132,6 +132,17 @@ class  Query
 
 
 
+    public function get_std_student($id)
+    {
+        $stmt = $this->pdo->prepare("SELECT student_subjects.subject_id as id, subjects.subject_name FROM student_subjects inner join subjects ON student_subjects.subject_id = subjects.id where student_subjects.student_id = $id");
+        $stmt->execute();
+        $multi = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        return $multi;
+    }
+
+
+
 
     public function login($table, $fields = array())
     {
