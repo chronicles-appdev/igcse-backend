@@ -261,7 +261,7 @@ class  Api extends Rest
         $query = new Query;
         try {
 
-            $results = $query->get_All('subjects', 'subject_name', 'asc');
+            $results = $query->get_std_student($student_id);
 
             if ($results) {
                 $data = ['subjects' => $results];
