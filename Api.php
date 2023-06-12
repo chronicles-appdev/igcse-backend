@@ -388,6 +388,59 @@ class  Api extends Rest
             $this->returnResponse(FAILED_RESPONSE, $message);
         }
     }
+    public function regSubject()
+    {
+        $subject_id = $this->validateParameter('subject_id', $this->param['subject_id'], STRING, false);
+        $student_id = $this->validateParameter('student_id', $this->param['student_id'], STRING, false);
+
+
+
+        $query = new Query;
+        $check = $query->get_single('student_subjects', array('student_id' => $student_id, 'subject_id' => $subject_id), 'id', 'asc');
+
+        if ($check) {
+            if ($check->active == 0) {
+                $tt_id = $query->update('student_subjects', 'id', $check->id, array('active' => 1));
+            } else {
+                $tt_id = $query->update('student_subjects', 'id', $check->id, array('active' => 0));
+            }
+        } else {
+            $tt_id = $query->create('student_subjects', array('student_id' => $student_id,  'subject_id' => $subject_id));
+        }
+
+
+
+
+        if ($tt_id) {
+            $message = 'Subject  Created Successfully';
+            $this->returnResponse(SUCCESS_RESPONSE, $tt_id);
+        } else {
+            $message = 'Failed to Create Subject';
+            $this->returnResponse(FAILED_RESPONSE, $message);
+        }
+    }
+
+    public function checkSubject()
+    {
+
+        $student_id = $this->validateParameter('student_id', $this->param['student_id'], STRING, false);
+
+
+        $query = new Query;
+        try {
+
+            $resul = $query->get_count('student_subjects', array('student_id' => $student_id, 'active' => 1), 'id', 'desc');
+
+            if ($resul >= 5) {
+                $data = ['testDetail' => $resul];
+                $this->returnResponse(SUCCESS_RESPONSE, $data);
+            } else {
+                $this->returnResponse(FAILED_RESPONSE, "Error Please Try Again.");
+            }
+        } catch (Exception $e) {
+            $this->throwError(FAILED_RESPONSE, $e->getMessage());
+        }
+    }
     // public function setQuestions()
     // {
     //     $test = $this->validateParameter('test', $this->param['test'], STRING, false);
