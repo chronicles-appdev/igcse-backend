@@ -130,6 +130,15 @@ class  Query
         return $multi;
     }
 
+    public function get_review($tt_id)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM marking inner join questions on marking.question_id=questions.id where test_taken_id=$tt_id;");
+        $stmt->execute();
+        $multi = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        return $multi;
+    }
+
 
 
     public function get_std_student($id)
