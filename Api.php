@@ -325,6 +325,27 @@ class  Api extends Rest
             $this->throwError(FAILED_RESPONSE, $e->getMessage());
         }
     }
+    public function getSubjectsNew()
+    {
+
+        $student_id = $this->validateParameter('student_id', $this->param['student_id'], STRING, false);
+
+
+        $query = new Query;
+        try {
+
+            $results = $query->get_All('subjects',  'subject_name', 'asc');
+
+            if ($results) {
+                $data = ['subjects' => $results];
+                $this->returnResponse(SUCCESS_RESPONSE, $data);
+            } else {
+                $this->returnResponse(FAILED_RESPONSE, "Error Please Try Again.");
+            }
+        } catch (Exception $e) {
+            $this->throwError(FAILED_RESPONSE, $e->getMessage());
+        }
+    }
     public function activate()
     {
         $act_code = $this->validateParameter('act_code', $this->param['act_code'], STRING, false);
