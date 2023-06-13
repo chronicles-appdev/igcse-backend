@@ -420,6 +420,29 @@ class  Api extends Rest
         }
     }
 
+
+    public function testTime()
+    {
+
+        $id = $this->validateParameter('id', $this->param['id'], STRING, false);
+
+
+        $query = new Query;
+        try {
+
+            $test_id = $query->get_single('takeTest', array('id' => $id), 'id', 'desc')->test_id;
+            $duration = $query->get_single('test', array('id' => $test_id), 'id', 'desc')->duration;
+
+            if ($duration) {
+                $data = ['duration' => $duration];
+                $this->returnResponse(SUCCESS_RESPONSE, $data);
+            } else {
+                $this->returnResponse(FAILED_RESPONSE, "Error Please Try Again.");
+            }
+        } catch (Exception $e) {
+            $this->throwError(FAILED_RESPONSE, $e->getMessage());
+        }
+    }
     public function checkSubject()
     {
 
