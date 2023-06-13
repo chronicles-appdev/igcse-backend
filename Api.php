@@ -431,7 +431,7 @@ class  Api extends Rest
         try {
 
             $test_id = $query->get_single('takeTest', array('id' => $id), 'id', 'desc')->test_id;
-            $duration = $query->get_single('test', array('id' => $test_id), 'id', 'desc')->duration;
+            $duration = $query->get_single('tests', array('id' => $test_id), 'id', 'desc')->duration;
 
             if ($duration) {
                 $data = ['duration' => $duration];
