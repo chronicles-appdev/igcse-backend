@@ -198,10 +198,17 @@ class  Api extends Rest
         $query = new Query;
         try {
 
-            $results = $query->get_single('takeTest', array('id' => $tt_id), 'id', 'asc');
+            $results = $query->get_multi('marking', array('test_taken_id' => $tt_id), 'id', 'asc');
+            $score = 0;
+            foreach ($results as $reas) {
+
+                if ($reas->selected_option == $reas->correct_option) {
+                    $score += 1;
+                }
+            }
 
             if ($results) {
-                $data = ['tests' => $results];
+                $data = ['score' => $score];
                 $this->returnResponse(SUCCESS_RESPONSE, $data);
             } else {
                 $this->returnResponse(FAILED_RESPONSE, "Error Please Try Again.");
