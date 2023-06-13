@@ -187,7 +187,7 @@ class  Api extends Rest
     public function getQuestions()
     {
 
-        $tt_id = $this->validateParameter('tt_id', $this->param['tt_id'], STRING, false);
+        $tt_id = $this->validateParameter('tt_id', $this->param['tt_id'], INTEGER, false);
         $student_id = $this->validateParameter('student_id', $this->param['student_id'], STRING, false);
 
 
