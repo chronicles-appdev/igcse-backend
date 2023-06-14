@@ -55,6 +55,16 @@ class  Query
         return $multi;
     }
 
+    public function get_history($student_id)
+    {
+
+        $stmt = $this->pdo->prepare("SELECT * FROM takeTest  where  student_id = '$student_id' ORDER BY id desc");
+        $stmt->execute();
+        $multi = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        return $multi;
+    }
+
     public function get_count($table, $fields = array(), $sort, $order)
     {
         $columns = '';

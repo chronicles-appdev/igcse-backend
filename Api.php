@@ -131,6 +131,27 @@ class  Api extends Rest
             $this->throwError(FAILED_RESPONSE, $e->getMessage());
         }
     }
+    public function getHistory()
+    {
+
+        $student_id = $this->validateParameter('student_id', $this->param['student_id'], STRING, false);
+
+
+        $query = new Query;
+        try {
+
+            $results = $query->get_history($student_id);
+
+            if ($results) {
+                $data = ['history' => $results];
+                $this->returnResponse(SUCCESS_RESPONSE, $data);
+            } else {
+                $this->returnResponse(FAILED_RESPONSE, "Error Please Try Again.");
+            }
+        } catch (Exception $e) {
+            $this->throwError(FAILED_RESPONSE, $e->getMessage());
+        }
+    }
     public function getReviews()
     {
 
@@ -194,7 +215,6 @@ class  Api extends Rest
         $query = new Query;
         try {
 
-            //$results = $query->get_multi('marking', array('test_taken_id' => $tt_id), 'id', 'asc');
             $results = $query->get_question_s($tt_id);
 
             if ($results) {
@@ -269,7 +289,7 @@ class  Api extends Rest
     {
 
         $student_id = $this->validateParameter('student_id', $this->param['student_id'], STRING, false);
-      //  $tt_id = $this->validateParameter('tt_id', $this->param['tt_id'], STRING, false);
+        //  $tt_id = $this->validateParameter('tt_id', $this->param['tt_id'], STRING, false);
 
 
 
@@ -343,6 +363,8 @@ class  Api extends Rest
             $this->throwError(FAILED_RESPONSE, $e->getMessage());
         }
     }
+
+
     public function getYears()
     {
 
