@@ -208,6 +208,29 @@ class  Api extends Rest
         }
     }
 
+    public function getTotalTest()
+    {
+
+        $student_id = $this->validateParameter('student_id', $this->param['student_id'], STRING, false);
+        $tt_id = $this->validateParameter('tt_id', $this->param['tt_id'], STRING, false);
+
+
+
+        $query = new Query;
+        try {
+
+            $results = $query->get_count('takeTest', array('student_id' => $student_id), 'id', 'asc');
+
+            if ($results) {
+                $data = ['count' => $results];
+                $this->returnResponse(SUCCESS_RESPONSE, $data);
+            } else {
+                $this->returnResponse(FAILED_RESPONSE, "Error Please Try Again.");
+            }
+        } catch (Exception $e) {
+            $this->throwError(FAILED_RESPONSE, $e->getMessage());
+        }
+    }
     public function getScore()
     {
 
@@ -230,7 +253,10 @@ class  Api extends Rest
 
             if ($results) {
                 $data = ['score' => $score];
-                $this->returnResponse(SUCCESS_RESPONSE, $data);
+                $create = $query->update('takeTest', 'id', $tt_id, array('correctly_answ' => $score));
+                if ($create) {
+                    $this->returnResponse(SUCCESS_RESPONSE, $data);
+                }
             } else {
                 $this->returnResponse(FAILED_RESPONSE, "Error Please Try Again.");
             }
