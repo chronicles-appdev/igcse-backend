@@ -58,7 +58,7 @@ class  Query
     public function get_history($student_id)
     {
 
-        $stmt = $this->pdo->prepare("SELECT * FROM takeTest  where  student_id = '$student_id' ORDER BY id desc");
+        $stmt = $this->pdo->prepare("SELECT * FROM takeTest inner join subjects on takeTest.subject_id = subjects.id where  takeTest.student_id = '$student_id' ORDER BY takeTest.id desc");
         $stmt->execute();
         $multi = $stmt->fetchAll(PDO::FETCH_OBJ);
 
