@@ -265,6 +265,40 @@ class  Api extends Rest
         }
     }
 
+    public function getPassed()
+    {
+
+        $student_id = $this->validateParameter('student_id', $this->param['student_id'], STRING, false);
+        $tt_id = $this->validateParameter('tt_id', $this->param['tt_id'], STRING, false);
+
+
+
+        $query = new Query;
+        try {
+
+            $results = $query->get_multi('takeTest', array('student_id' => $student_id), 'id', 'asc');
+            $count_passed = 0;
+
+            foreach ($results as $one) {
+
+                $num = $one->num_question;
+                $score = $one->correctly_answ;
+                $half = $num / 2;
+                $de = $num - $score;
+                if ($score >= $half) {
+                    $count_passed++;
+                }
+            }
+            if ($results) {
+                $data = ['passed' => $count_passed];
+                $this->returnResponse(SUCCESS_RESPONSE, $data);
+            } else {
+                $this->returnResponse(FAILED_RESPONSE, "Error Please Try Again.");
+            }
+        } catch (Exception $e) {
+            $this->throwError(FAILED_RESPONSE, $e->getMessage());
+        }
+    }
     public function getResult()
     {
 

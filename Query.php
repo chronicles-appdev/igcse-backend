@@ -145,6 +145,15 @@ class  Query
         return $multi;
     }
 
+    public function get_count_pass($id)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM takeTest  where student_id = $id");
+        $stmt->execute();
+        $multi = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        return $multi;
+    }
+
 
 
     public function get_std_student($id)
