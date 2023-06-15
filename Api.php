@@ -218,7 +218,7 @@ class  Api extends Rest
             $results = $query->get_question_s($tt_id);
 
             if ($results) {
-                $data = ['questions' => json_encode($results)];
+                $data = ['questions' => $results];
                 $this->returnResponse(SUCCESS_RESPONSE, $data);
             } else {
                 $this->returnResponse(FAILED_RESPONSE, "Error Please Try Again.");
