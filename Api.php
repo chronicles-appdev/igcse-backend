@@ -368,13 +368,14 @@ class  Api extends Rest
     public function getYears()
     {
 
+        $subject_id = $this->validateParameter('subject_id', $this->param['subject_id'], STRING, false);
         $student_id = $this->validateParameter('student_id', $this->param['student_id'], STRING, false);
 
 
         $query = new Query;
         try {
 
-            $results = $query->get_All('years', 'year_name', 'desc');
+            $results = $query->get_multi('years', array('subject_id' => $subject_id), 'year_name', 'desc');
 
             if ($results) {
                 $data = ['years' => $results];
