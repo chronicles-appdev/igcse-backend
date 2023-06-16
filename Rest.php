@@ -97,7 +97,7 @@ class Rest
     {
         header("content-type: application/json");
         $all = ['response' => ['status' => $code, "result" => $data]];
-        $response = json_encode($all, JSON_UNESCAPED_UNICODE);
+        $response = json_encode($all, JSON_PARTIAL_OUTPUT_ON_ERROR);
         echo $response;
         exit;
     }
